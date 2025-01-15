@@ -3,6 +3,7 @@ from models import Employee  # Ensure that this points to your models file corre
 from schemas import EmployeeCreate
 
 
+
 # Create a new employee
 def create_employee(db: Session, employee: EmployeeCreate):
     db_employee = Employee(
