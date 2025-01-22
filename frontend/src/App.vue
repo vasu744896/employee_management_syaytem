@@ -1,20 +1,15 @@
 <template>
   <div id="app">
-    <EmployeeList />
+    <router-view></router-view> <!-- Displays the current route's component -->
   </div>
 </template>
 
 <script>
-import EmployeeList from './components/EmployeeList.vue';
-
 export default {
-  name: 'App',
-  components: {
-    EmployeeList
-  }
+  name: 'App', // The name of the component
 };
 </script>
 
-<style>
-/* Add global styles if needed */
+<style scoped>
+/* Add any global styles here */
 </style>

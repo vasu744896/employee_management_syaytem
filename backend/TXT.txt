@@ -1,0 +1,11 @@
+ CREATE TABLE IF NOT EXISTS employees (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    employee_id TEXT UNIQUE,
+    name TEXT,
+    email TEXT UNIQUE,
+    phone TEXT,
+    department TEXT,
+    manager_id INTEGER,
+    FOREIGN KEY (manager_id) REFERENCES employees (id)
+);
+

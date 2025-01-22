@@ -112,6 +112,9 @@ async def list_employees(db: AsyncSession = Depends(get_db)):
 
 
 
+
+
+
 # Endpoint to update an employee (store in SQLite database)
 @app.put("/employees/{employee_id}", response_model=EmployeeInDB)
 async def update_employee(employee_id: str, employee: EmployeeCreate, db: AsyncSession = Depends(get_db)):
@@ -119,20 +122,14 @@ async def update_employee(employee_id: str, employee: EmployeeCreate, db: AsyncS
     existing_employee = result.scalars().first()
     if not existing_employee:
         raise HTTPException(status_code=404, detail="Employee not found.")
-    
-    # Check for duplicate email and employee_id
-    if await db.execute(select(Employee).filter(Employee.email == employee.email).filter(Employee.id != existing_employee.id)).scalar():
-        raise HTTPException(status_code=400, detail="Email already exists.")
-    if await db.execute(select(Employee).filter(Employee.employee_id == employee.employee_id).filter(Employee.id != existing_employee.id)).scalar():
-        raise HTTPException(status_code=400, detail="Employee ID already exists.")
 
     # Update employee details
     existing_employee.name = employee.name
     existing_employee.email = employee.email
     existing_employee.employee_id = employee.employee_id
     existing_employee.phone = employee.phone
-    existing_employee.manager_id = employee.manager_id
     existing_employee.department = employee.department
+    existing_employee.manager_id = employee.manager_id
 
     await db.commit()
     await db.refresh(existing_employee)
